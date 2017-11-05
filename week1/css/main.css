@@ -1,0 +1,48 @@
+
+
+html,body{
+	padding: 0;
+	margin: 0;
+}
+
+#app{
+	display: inline-flex;
+	width: 100%;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+#painting-board{
+	display: inline-flex;
+	width: 600px;
+	flex-wrap: wrap;
+	border: 1px solid gray;
+}
+
+#painting-board .pixel{
+	display: inline-flex;
+	width: 12px;
+	height: 12px;
+	border: none;
+}
+
+#painting-board .pixel:hover{
+	background-color: gray;
+}
+
+#color-board{
+	display: inline-flex;
+	margin-top: 20px;
+}
+
+#color-board .color{
+	display: inline-flex;
+	width: 20px;
+	height: 20px;
+}
+
+
+#color-board .color:hover{
+	border: 1px solid red;
+}
