@@ -14,23 +14,51 @@ const colorList = [
 				}
 			},
 			{
-				color: 'blue',
+				color: 'red',
 				style: {
-					backgroundColor: '#f80000',
+					backgroundColor: '#ff0202',
 					border: '1px solid gray'
 				}
 			},
 			{
-				color: 'yello',
+				color: 'orange',
 				style: {
-					backgroundColor: '#ffeb3b',
+					backgroundColor: '#ffa702',
+					border: '1px solid gray'
+				}
+			},
+			{
+				color: 'yellow',
+				style: {
+					backgroundColor: '#faff02',
 					border: '1px solid gray'
 				}
 			},
 			{
 				color: 'green',
 				style: {
-					backgroundColor: '#4CAF4F',
+					backgroundColor: '#6eff02',
+					border: '1px solid gray'
+				}
+			},
+			{
+				color: 'blue',
+				style: {
+					backgroundColor: '#02dbff',
+					border: '1px solid gray'
+				}
+			},
+			{
+				color: 'purple_blue',
+				style: {
+					backgroundColor: '#0243ff',
+					border: '1px solid gray'
+				}
+			},
+			{
+				color: 'purple',
+				style: {
+					backgroundColor: '#9f02ff',
 					border: '1px solid gray'
 				}
 			}
