@@ -8,9 +8,9 @@
 <body>
 	<div id="app">
 		<div id="painting-board">
-			<div class="pixel" v-for="i in pixels"
+			<div class="pixel" v-for="(i,index) in pixels"
 			:style="i.style" 
-			v-on:mousedown="paintColor(i)" v-on:mouseover="keepDrawing(i)"
+			v-on:mousedown="paintColor(i,index)" v-on:mouseover="keepDrawing(i,index)"
 			></div>
 			
 		</div>
@@ -20,6 +20,8 @@
 			>
 			</div>
 		</div>
+		<button v-on:click="produceImage()">click</button>
+		<img src="" id="image">
 	</div>
 
 </body>
