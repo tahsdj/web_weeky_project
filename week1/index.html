@@ -4,6 +4,7 @@
 	<title>little painter</title>
 	<script src="https://unpkg.com/vue"></script>
 	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<script src="https://www.gstatic.com/firebasejs/4.6.1/firebase.js"></script>
 </head>
 <body>
 	<div id="app">
@@ -20,7 +21,12 @@
 			>
 			</div>
 		</div>
-		<button v-on:click="produceImage()">click</button>
+		<button v-on:click="confirmForm()">click</button>
+		<div id="uploadform" :style="uploadFormBox">
+			<input type="" name="" placeholder="input your name" v-model="inputData.name">
+			<input type="" name="" placeholder="add a title of your painting" v-model="inputData.title">
+			<button v-on:click="submit">submit</button>
+		</div>
 		<img src="" id="image">
 	</div>
 

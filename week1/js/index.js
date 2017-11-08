@@ -77,6 +77,20 @@ for(let i = 0 ; i < width*height ; i++){
 	})
 }
 
+
+ // Initialize Firebase
+var config = {
+	apiKey: "AIzaSyD4bK-_HQbsHSnc1XWn1buwlfBTbijAgrI",
+	authDomain: "paintings-2a09e.firebaseapp.com",
+	databaseURL: "https://paintings-2a09e.firebaseio.com",
+	projectId: "paintings-2a09e",
+	storageBucket: "gs://paintings-2a09e.appspot.com",
+	messagingSenderId: "743572832253"
+}
+firebase.initializeApp(config);
+
+const paintingsRef = firebase.database().ref('/paintings')
+
 const app = new Vue({
 	el: '#app',
 	data: {
@@ -96,6 +110,13 @@ const app = new Vue({
 			'rgb(2,219,255)': [2,219,255],
 			'rgb(2,67,255)': [2,67,255],
 			'rgb(159,2,255)': [159,2,255]
+		},
+		uploadFormBox: {
+			'display': 'none'
+		},
+		inputData: {
+			name: '',
+			title: ''
 		}
 	},
 	computed: {
@@ -134,8 +155,12 @@ const app = new Vue({
 			e.style.border = `2px solid ${this.nowColor}`
 			e.style.boxShadow = `1px 1px 2px gray`
 		},
-
-		produceImage(){
+		
+		confirmForm(){
+			this.uploadFormBox.display = 'inline-flex'
+		},
+		submit(){
+			//get image data
 			let buffer = new Uint8ClampedArray(this.imageHeight * this.imageWidth * 4)
 			console.log(this.rgbValueForEachValue.length)
 			for (let i = 0 ; i < this.rgbValueForEachValue.length ; i++){
@@ -159,9 +184,35 @@ const app = new Vue({
 			idata.data.set(buffer)
 			ctx.putImageData(idata,0,0)
 
+			//let uploadTask = storageRef.child('images/'+'paul').putString(dataUri, 'base64url')
+
+			//we have to convert image to blob form to upload
+			canvas.toBlob(function(blob){
+			  let image = new Image();
+			  image.src = blob;
+			  var uploadTask = storageRef.child('images/' + "paul").put(blob);
+			  uploadTask.on('state_changed', function(snapshot){
+			        let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+			        console.log('Upload is ' + progress + '% done')
+				})
+			})
+
+			//upload name and title
+			const data = {
+				name: this.inputData.name,
+				title: this.inputData.title
+			}
+			paintingsRef.push(data).then(d => {
+				console.log('succcess')
+			})
 			let dataUri = canvas.toDataURL()
-			img = document.getElementById('image')
+			const storageRef = firebase.storage().ref()
+			const img = document.getElementById('image')
 			img.src = dataUri
+		},
+
+		produceImage(){
+			
 		}
 	}
 })
