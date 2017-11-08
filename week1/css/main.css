@@ -3,10 +3,12 @@
 html,body{
 	padding: 0;
 	margin: 0;
+	overflow-y: visible;
 }
 
 #app{
 	display: inline-flex;
+	position: relative;
 	width: 100%;
 	min-height: 100vh;
 	flex-direction: column;
@@ -14,6 +16,63 @@ html,body{
 	align-items: center;
 	background-color: #f8f8f8;
 }
+
+header{
+	position: fixed;
+	display: inline-flex;
+	top: 0;
+	left: 0;
+	width: calc(100% - 20px);
+	padding: 10px;
+	z-index: 99;
+	justify-content: center;
+	background-color: #f8f8f8;
+}
+
+header > .container{
+	display: inline-flex;
+	width: calc(100% - 20px);
+	max-width: 1000px;
+	justify-content: space-between;
+	flex-direction: reverse;
+	padding: 5px 10px;
+}
+
+header > .container > #home{
+	font-size: 20px;
+	width: 30px;
+	height: 30px;
+	cursor: pointer;
+}
+
+header > .container > #home img{
+	width: 100%;
+	height: 100%;
+}
+
+
+header > .container > #drawing{
+	font-size: 20px;
+	color: gray;
+	cursor: pointer;
+	transition: all 0.4s;
+}
+
+header > .container > #drawing:hover{
+	color: black;
+}
+
+#app > .container{
+	display: inline-flex;
+	position: relative;
+	width: 100%;
+	min-height: 100vh;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: #f8f8f8;
+}
+
 
 #painting-board{
 	display: inline-flex;
@@ -53,9 +112,22 @@ html,body{
 	padding: 1px;
 }
 
-#image{
-	width: 600px;
-	height: 480px;
+#finish{
+	width: 80px;
+	padding: 12px 10px;
+	border-radius: 20px;
+	border: none;
+	color: white;
+	transition: all 0.5s;
+	background-color: #7394D2;
+	cursor: pointer;
+}
+
+#finish:hover{
+	width: 84px;
+	border-radius: 18px;
+	padding: 10px 10px;
+	background-color: #6C88BD;
 }
 
 #uploadform{
@@ -70,6 +142,7 @@ html,body{
 	align-items: center;
 	padding: 10px;
 	background-color: white;
+	z-index: 10;
 }
 
 #uploadform > input {
@@ -80,13 +153,97 @@ html,body{
 	padding: 0px 5px;
 	margin-bottom: 5px;
 }
-
-#uploadform > button {
+#uploadform > .buttons{
+	display: inline-flex;
+	width: calc(100% - 10px);
+	padding: 0px 5px;
+	justify-content: space-between;
+}
+#uploadform > .buttons > button {
 	align-self: flex-end;
 	width: 80px;
 	padding: 10px;
 	border-radius: 5px;
 	background-color: #7394D2;
 	border: none;
+	color: white;
+	transition: background-color 0.4s;
+}
+
+#uploadform > .buttons > button:first-child{
+	background-color: #dadbdf;
+}
+
+#uploadform > .buttons > button:first-child:hover{
+	background-color: #cccdd0;
+}
+
+#uploadform > .buttons > button:nth-child(2):hover{
+	background-color: #6C88BD;
+}
+
+#paintings-board{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	display: inline-block;
+	flex-direction: column;
+	width: 100%;
+	min-height: calc(100% - 160px);
+	padding: 80px 0px;
+	background-color: #f8f8f8;
+	align-items: center;
+}
+
+#paintings-board >.container{
+	display: inline-flex;
+	flex-wrap: wrap;
+	width: calc(100% - 20px);
+	padding: 10px;
+	max-width: 1600px;
+	justify-content: center;
+}
+
+#paintings-board >.container > .painting{
+	display: inline-flex;
+	width: 300px;
+	height: 280px;
+	background-color: white;
+	margin: 10px;
+	box-shadow: 2px 2px 4px gray;
+	flex-direction: column;
+	padding: 5px;
+}
+
+#paintings-board >.container > .painting > .header{
+	display: inline-flex;
+	flex-direction: row;
+	width: calc(100%);
+	padding: 5px 0px;
+	justify-content: space-between;
+}
+
+#paintings-board >.container > .painting > .header > .name{
+}
+
+#paintings-board >.container > .painting > .header > .title{
+}
+
+#paintings-board >.container > .painting > .img{
+	width: calc(100%);
+	height: 240px;
+	background-color: gray;
+}
+
+#paintings-board >.container > .painting > .img > img{
+	width: 100%;
+	height: 100%;
+}
+
+#loading{
+	position: fixed;
+	top: 300px;
+	left: 50%;
+	transform: translateX(-50%);
 	color: white;
 }

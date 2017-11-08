@@ -8,26 +8,58 @@
 </head>
 <body>
 	<div id="app">
-		<div id="painting-board">
-			<div class="pixel" v-for="(i,index) in pixels"
-			:style="i.style" 
-			v-on:mousedown="paintColor(i,index)" v-on:mouseover="keepDrawing(i,index)"
-			></div>
-			
-		</div>
-		<div id="color-board">
-			<div class="color" v-for="i in colors" :style="i.style"
-			v-on:click="changeColor(i)"
-			>
+		<header>
+			<div class="container">
+				<div id="home" v-on:click="toHomePage">
+					<img src="./img/home.png">
+				</div>
+				<div id="drawing">
+					<a v-on:click="changeToDrawingPage">drawing</a>
+				</div>
 			</div>
+		</header>
+		<div class="container" :style="background">
+			<div id="painting-board">
+				<div class="pixel" v-for="(i,index) in pixels"
+				:style="i.style" 
+				v-on:mousedown="paintColor(i,index)" v-on:mouseover="keepDrawing(i,index)"
+				></div>
+				
+			</div>
+			<div id="color-board">
+				<div class="color" v-for="i in colors" :style="i.style"
+				v-on:click="changeColor(i)"
+				>
+				</div>
+			</div>
+			<button v-on:click="confirmForm()" id="finish">finish</button>
 		</div>
-		<button v-on:click="confirmForm()">click</button>
 		<div id="uploadform" :style="uploadFormBox">
 			<input type="" name="" placeholder="input your name" v-model="inputData.name">
 			<input type="" name="" placeholder="add a title of your painting" v-model="inputData.title">
-			<button v-on:click="submit">submit</button>
+			<div class="buttons">
+				<button v-on:click="cancel">cancel</button>
+				<button v-on:click="submit">submit</button>
+			</div>
 		</div>
-		<img src="" id="image">
+		<div id="loading" :style="loadingStyle">loading...</div>
+		<div id="paintings-board" :style="firstPage">
+			<div class="container">
+				<div class="painting" v-for="i in paintings">
+					<div class="header">
+						<div class="name">
+							{{i.name}}
+						</div>
+						<div class="title">
+							#{{i.title}}
+						</div>
+					</div>
+					<div class="img">
+						<img :src="i.imgUrl">
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 
 </body>

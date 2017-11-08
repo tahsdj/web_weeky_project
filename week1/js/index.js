@@ -66,7 +66,8 @@ const colorList = [
 				}
 			}
 		]
-pixelList = []
+
+let pixelList = []
 const width = 100
 const height = 80
 for(let i = 0 ; i < width*height ; i++){
@@ -75,6 +76,17 @@ for(let i = 0 ; i < width*height ; i++){
 			backgroundColor: 'white'
 		}
 	})
+}
+
+//get uuid
+function generateUUID(){
+    var d = new Date().getTime();
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = (d + Math.random()*16)%16 | 0;
+        d = Math.floor(d/16);
+        return (c=='x' ? r : (r&0x7|0x8)).toString(16);
+    });
+    return uuid;
 }
 
 
@@ -90,10 +102,43 @@ var config = {
 firebase.initializeApp(config);
 
 const paintingsRef = firebase.database().ref('/paintings')
+let done = false
+//get paintings data
+let paintings = new Array()
+paintingsRef.once('value').then(data=>{
+		data.forEach(d=>{
+			console.log('d value:'+ d.val().name)
+			let content = d.val()
+			const storageRef = firebase.storage().ref()
+			storageRef.child('images/'+content.id).getDownloadURL().then(function(url) {
+					content.imgUrl = url
+					paintings.push(content)
+				 }).catch(function(error) {
+			    // Uh-oh, an error occurred!
+			 	 })
+		})
+	}).then(()=>{
+		done = true
+	})
+paintingsRef.on('child_added',data=>{
+	if(done){
+		let content = data.val()
+		console.log('get data~')
+		const storageRef = firebase.storage().ref()
+		storageRef.child('images/'+content.id).getDownloadURL().then(url => {
+					content.imgUrl = url
+					app.paintings = [content,...app.paintings]
+					console.log('add new paintings~')
+				 }).catch(err => {
+			    // Uh-oh, an error occurred!
+			 	 })
+	}
+})
 
 const app = new Vue({
 	el: '#app',
 	data: {
+		paintings: paintings.reverse(),
 		imageWidth: width,
 		imageHeight: height,
 		colors: colorList,
@@ -114,10 +159,33 @@ const app = new Vue({
 		uploadFormBox: {
 			'display': 'none'
 		},
+		firstPage: {
+			'display': 'inline-flex'
+		},
+		background: {
+			filter: 'none',
+			pointerEvents: 'default'
+		},
+		loadingStyle: {
+			'display': 'none'
+		},
 		inputData: {
 			name: '',
 			title: ''
 		}
+	},
+	beforeMount: function(){
+		console.log(this.paintings.length)
+		const storageRef = firebase.storage().ref()
+		/*
+		this.paintings = this.paintings.map(p=>{
+			storageRef.child('images/'+p.id).getDownloadURL().then(function(url) {
+				p.imgUrl = url
+			    return p
+			 }).catch(function(error) {
+		    // Uh-oh, an error occurred!
+		 	 })
+		})*/
 	},
 	computed: {
 		rgbValueForEachValue(){
@@ -158,8 +226,19 @@ const app = new Vue({
 		
 		confirmForm(){
 			this.uploadFormBox.display = 'inline-flex'
+			this.background.filter = 'brightness(50%)'
+			this.background.pointerEvents = 'none'
+		},
+		cancel(){
+			this.uploadFormBox.display = 'none'
+			this.background.filter = 'none'
+			this.background.pointerEvents = 'initial'
 		},
 		submit(){
+			//remove uploadform
+			this.uploadFormBox.display = 'none'
+			//loading icon appear
+			this.loadingStyle.display = 'inline-flex'
 			//get image data
 			let buffer = new Uint8ClampedArray(this.imageHeight * this.imageWidth * 4)
 			console.log(this.rgbValueForEachValue.length)
@@ -187,32 +266,58 @@ const app = new Vue({
 			//let uploadTask = storageRef.child('images/'+'paul').putString(dataUri, 'base64url')
 
 			//we have to convert image to blob form to upload
+			const storageRef = firebase.storage().ref()
+			const id = generateUUID()
+			_this = this
 			canvas.toBlob(function(blob){
 			  let image = new Image();
 			  image.src = blob;
-			  var uploadTask = storageRef.child('images/' + "paul").put(blob);
+			  var uploadTask = storageRef.child('images/' + id).put(blob);
 			  uploadTask.on('state_changed', function(snapshot){
 			        let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 			        console.log('Upload is ' + progress + '% done')
+			        if(progress == 100){
+			        	const data = {
+							name: _this.inputData.name,
+							title: _this.inputData.title,
+							id: id,
+							imgUrl: '',
+						}
+						paintingsRef.push(data).then(d => {
+							_this.loadingStyle.display = 'none'
+							_this.background.filter = 'none'
+							_this.background.pointerEvents = 'initial'
+							_this.firstPage.display = 'inline-flex'
+						})
+			        }
 				})
 			})
 
 			//upload name and title
+			/*
 			const data = {
 				name: this.inputData.name,
-				title: this.inputData.title
+				title: this.inputData.title,
+				id: id,
+				imgUrl: '',
 			}
 			paintingsRef.push(data).then(d => {
 				console.log('succcess')
 			})
+
 			let dataUri = canvas.toDataURL()
 			const storageRef = firebase.storage().ref()
 			const img = document.getElementById('image')
 			img.src = dataUri
+			*/
 		},
 
-		produceImage(){
-			
+		changeToDrawingPage(){
+			this.firstPage.display = 'none'
+		},
+
+		toHomePage(){
+			this.firstPage.display = 'inline-flex'
 		}
 	}
 })
