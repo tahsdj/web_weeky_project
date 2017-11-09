@@ -32,11 +32,14 @@
 				>
 				</div>
 			</div>
-			<button v-on:click="confirmForm()" id="finish">finish</button>
+			<div class="buttons">
+				<button v-on:click="erase()" id="erase">clear</button>
+				<button v-on:click="confirmForm()" id="finish">finish</button>
+			</div>
 		</div>
 		<div id="uploadform" :style="uploadFormBox">
-			<input type="" name="" placeholder="input your name" v-model="inputData.name">
-			<input type="" name="" placeholder="add a title of your painting" v-model="inputData.title">
+			<input type="" name="" placeholder="who are you" v-model="inputData.name">
+			<input type="" name="" placeholder="add a title" v-model="inputData.title">
 			<div class="buttons">
 				<button v-on:click="cancel">cancel</button>
 				<button v-on:click="submit">submit</button>

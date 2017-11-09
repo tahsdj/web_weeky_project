@@ -268,7 +268,7 @@ const app = new Vue({
 			//we have to convert image to blob form to upload
 			const storageRef = firebase.storage().ref()
 			const id = generateUUID()
-			_this = this
+			let _this = this
 			canvas.toBlob(function(blob){
 			  let image = new Image();
 			  image.src = blob;
@@ -288,7 +288,10 @@ const app = new Vue({
 							_this.background.filter = 'none'
 							_this.background.pointerEvents = 'initial'
 							_this.firstPage.display = 'inline-flex'
+							//erase the picture
 						})
+						//call erase function
+						_this.erase()
 			        }
 				})
 			})
@@ -311,7 +314,11 @@ const app = new Vue({
 			img.src = dataUri
 			*/
 		},
-
+		erase(){
+			for(let i = 0 ; i < this.pixels.length; i++){
+				this.pixels[i].style.backgroundColor = 'white'
+			}
+		},
 		changeToDrawingPage(){
 			this.firstPage.display = 'none'
 		},

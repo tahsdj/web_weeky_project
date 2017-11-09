@@ -6,6 +6,14 @@ html,body{
 	overflow-y: visible;
 }
 
+*{
+	font-family: monospace;
+}
+
+button{
+	outline: none;
+}
+
 #app{
 	display: inline-flex;
 	position: relative;
@@ -113,14 +121,33 @@ header > .container > #drawing:hover{
 }
 
 #finish{
+	background-color: #7394D2;
+}
+
+#app > .container > .buttons > button{
 	width: 80px;
 	padding: 12px 10px;
 	border-radius: 20px;
 	border: none;
 	color: white;
 	transition: all 0.5s;
-	background-color: #7394D2;
+	outline: none;
 	cursor: pointer;
+}
+
+#app > .buttons{
+	display: inline-flex;
+}
+
+#erase{
+	background-color: #dadbdf;
+}
+
+#erase:hover{
+	width: 84px;
+	border-radius: 18px;
+	padding: 10px 10px;
+	background-color: #cccdd0;
 }
 
 #finish:hover{
@@ -181,6 +208,7 @@ header > .container > #drawing:hover{
 #uploadform > .buttons > button:nth-child(2):hover{
 	background-color: #6C88BD;
 }
+
 
 #paintings-board{
 	position: absolute;
