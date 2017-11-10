@@ -107,7 +107,7 @@ let done = false
 let paintings = new Array()
 paintingsRef.once('value').then(data=>{
 		data.forEach(d=>{
-			console.log('d value:'+ d.val().name)
+			//console.log('d value:'+ d.val().name)
 			let content = d.val()
 			const storageRef = firebase.storage().ref()
 			storageRef.child('images/'+content.id).getDownloadURL().then(function(url) {
@@ -123,7 +123,7 @@ paintingsRef.once('value').then(data=>{
 paintingsRef.on('child_added',data=>{
 	if(done){
 		let content = data.val()
-		console.log('get data~')
+		//console.log('get data~')
 		const storageRef = firebase.storage().ref()
 		storageRef.child('images/'+content.id).getDownloadURL().then(url => {
 					content.imgUrl = url
@@ -175,7 +175,7 @@ const app = new Vue({
 		}
 	},
 	beforeMount: function(){
-		console.log(this.paintings.length)
+		//console.log(this.paintings.length)
 		const storageRef = firebase.storage().ref()
 		/*
 		this.paintings = this.paintings.map(p=>{
@@ -241,7 +241,7 @@ const app = new Vue({
 			this.loadingStyle.display = 'inline-flex'
 			//get image data
 			let buffer = new Uint8ClampedArray(this.imageHeight * this.imageWidth * 4)
-			console.log(this.rgbValueForEachValue.length)
+			//console.log(this.rgbValueForEachValue.length)
 			for (let i = 0 ; i < this.rgbValueForEachValue.length ; i++){
 				let pos = i * 4
 				let colors = this.colorDic[this.rgbValueForEachValue[i]]
@@ -295,28 +295,11 @@ const app = new Vue({
 			        }
 				})
 			})
-
-			//upload name and title
-			/*
-			const data = {
-				name: this.inputData.name,
-				title: this.inputData.title,
-				id: id,
-				imgUrl: '',
-			}
-			paintingsRef.push(data).then(d => {
-				console.log('succcess')
-			})
-
-			let dataUri = canvas.toDataURL()
-			const storageRef = firebase.storage().ref()
-			const img = document.getElementById('image')
-			img.src = dataUri
-			*/
 		},
 		erase(){
 			for(let i = 0 ; i < this.pixels.length; i++){
 				this.pixels[i].style.backgroundColor = 'white'
+				this.rgbValueForEachValue[i] = 'rgb(255,255,255)'
 			}
 		},
 		changeToDrawingPage(){
