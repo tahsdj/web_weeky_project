@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Game</title>
+	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+	<script src="https://unpkg.com/vue"></script>
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body onload="gameInit()">
+	<div id="app">
+		<canvas id ="canvas" onload="" width="1000" height="600">
+		</canvas>
+		<div id="info-board">
+			<input placeholder="nickname" v-model = "player.name">
+			<button v-on:click="join()">Join</button>
+			<div class="player-list">
+				<div class="player" v-for="i in playerList">
+					<div>{{i.name}}/points: {{i.points}}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+		
+</body>
+<script type="text/javascript" src="js/index.js"></script>
+</html>
