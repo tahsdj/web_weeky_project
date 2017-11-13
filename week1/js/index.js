@@ -109,6 +109,7 @@ paintingsRef.once('value').then(data=>{
 		data.forEach(d=>{
 			//console.log('d value:'+ d.val().name)
 			let content = d.val()
+			content.key = d.key
 			const storageRef = firebase.storage().ref()
 			storageRef.child('images/'+content.id).getDownloadURL().then(function(url) {
 					content.imgUrl = url
@@ -282,6 +283,7 @@ const app = new Vue({
 							title: _this.inputData.title,
 							id: id,
 							imgUrl: '',
+							smiles: 0
 						}
 						paintingsRef.push(data).then(d => {
 							_this.loadingStyle.display = 'none'
@@ -308,6 +310,16 @@ const app = new Vue({
 
 		toHomePage(){
 			this.firstPage.display = 'inline-flex'
+		},
+		clickSmile(key,s){
+			this.paintings = this.paintings.map(p=>{
+				if (p.key == key) p.smiles++
+				return p
+			})
+
+			paintingsRef.child(key).update({
+				smiles: s+1
+			})
 		}
 	}
 })

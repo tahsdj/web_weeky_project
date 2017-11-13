@@ -60,6 +60,12 @@
 					</div>
 					<div class="img">
 						<img :src="i.imgUrl">
+						<div class="like-btn">
+							<img src="./img/smile.png" v-on:click="clickSmile(i.key,i.smiles)">
+							<div class="smiles">
+								{{i.smiles}}
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
