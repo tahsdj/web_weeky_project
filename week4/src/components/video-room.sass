@@ -1,0 +1,61 @@
+
+.room-board
+	display: inline-flex
+	position: relative
+	width: 100%;
+	min-width: 100vh;
+	justify-content: center
+	padding: 100px 0px 50px 0px
+	*
+		//border: 1px solid gray
+	.container
+		display: inline-flex
+		width: calc(100% - 10px)
+		max-width: 1500px
+		padding: 5px
+		justify-content: center
+
+		iframe
+			width: calc(100% - 400px)
+			max-width: 1000px
+			margin-right: 10px
+	.search-box
+		display: inline-flex
+		flex-direction: column
+		position: fixed
+		width: calc(100% - 20px)
+		max-width: 600px
+		top: 10px
+		padding: 10px
+		align-items: center
+
+		.search-input
+			width: calc(100% - 20px)
+			padding: 10px
+			border-radius: 20px
+			background-color: rgba(255,255,255,0.2)
+			color: rgb(200,200,200)
+			outline: none
+			border: none
+		
+		.search-video
+			display: inline-flex
+			width: calc(100% - 40px)
+			flex-direction: rows
+			background-color: white
+			padding: 5px
+			transition: background-color 0.2s
+			cursor: pointer
+
+			.video-detail
+				display: inline-flex
+				flex-direction: column
+				padding: 10px
+				
+				.video-title
+					padding: 10px
+			&:hover
+				background-color: rgb(230,230,230)
+
+::-webkit-input-placeholder
+	color: rgb(200,200,200)
