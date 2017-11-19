@@ -8,6 +8,7 @@
 	padding: 100px 0px 50px 0px
 	*
 		//border: 1px solid gray
+		font-family: sans-serif,Microsoft JhengHei,MingLiU,serif
 	.container
 		display: inline-flex
 		width: calc(100% - 10px)
@@ -15,10 +16,12 @@
 		padding: 5px
 		justify-content: center
 
-		iframe
+		#player
 			width: calc(100% - 400px)
 			max-width: 1000px
 			margin-right: 10px
+			border: none
+			padding: none
 	.search-box
 		display: inline-flex
 		flex-direction: column
@@ -26,6 +29,8 @@
 		width: calc(100% - 20px)
 		max-width: 600px
 		top: 10px
+		left: 50%
+		transform: translateX(-50%)
 		padding: 10px
 		align-items: center
 
@@ -40,13 +45,22 @@
 		
 		.search-video
 			display: inline-flex
-			width: calc(100% - 40px)
+			position: relative
+			width: calc(100% - 90px)
 			flex-direction: rows
-			background-color: white
+			background-color: #232340
+			color: white
 			padding: 5px
 			transition: background-color 0.2s
 			cursor: pointer
-
+			padding-right: 50px
+			.add
+				position: absolute
+				right: 20px
+				top: 50%
+				transform: translate(-50%,-50%)
+				width: 20px
+				height: 20px
 			.video-detail
 				display: inline-flex
 				flex-direction: column
@@ -55,7 +69,7 @@
 				.video-title
 					padding: 10px
 			&:hover
-				background-color: rgb(230,230,230)
+				background-color: #3c3c59
 
 ::-webkit-input-placeholder
 	color: rgb(200,200,200)

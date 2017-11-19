@@ -34,3 +34,29 @@
 			>.text
 				display: inline-flex
 				justify-content: flex-start
+	.video-block
+		display: inline-flex
+		position: relative
+		width: calc(100% - 10px)
+		flex-direction: rows
+		background-color: rgba(255,255,255,0.2)
+		color: white
+		padding: 5px
+		font-size: 12px
+		transition: background-color 0.2s
+		cursor: pointer
+		.video-detail
+			display: inline-flex
+			flex-direction: column
+			padding: 5px
+			
+			.video-title
+				padding: 5px
+		.video-img
+			width: 60px
+			height: 48px
+
+		&:hover
+			background-color: rgba(255,255,255,0.4)
+	.playing
+		background-color: rgba(255,255,255,0.4)
