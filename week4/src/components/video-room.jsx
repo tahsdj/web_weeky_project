@@ -14,7 +14,8 @@ export default class VideoRoom extends React.Component {
 			videoId: '',
 			myPlayList: [],
 			player: '',
-			currentVideoIndex: 0
+			currentVideoIndex: 0,
+			playListVideosLimit: 6
 		}
 		this.handleInput = this.handleInput.bind(this)
 		this.handlekeyPress = this.handlekeyPress.bind(this)
@@ -132,8 +133,15 @@ export default class VideoRoom extends React.Component {
 		}
 		let playList = this.state.myPlayList
 		let index = this.state.currentVideoIndex
-		if(playList.length != 0 ) index++
+		if( playList.length != 0 ) index++
+		//add this video to playlist
 		playList.splice(index,0,video)
+		//keep the limit videos
+		/*
+		if( playList.length > this.state.playListVideosLimit ){
+			playList.splice(0,1)
+			index--
+		}*/
 		this.setState({
 			videoId: video.vid,
 			searchResults: [],
@@ -156,6 +164,22 @@ export default class VideoRoom extends React.Component {
 		let myPlayList = new Array()
 		myPlayList = this.state.myPlayList
 		myPlayList.push(video)
+		//keep the limit videos
+		/*
+		if(myPlayList.length > this.state.playListVideosLimit ) {
+			myPlayList.splice(0,1)
+			//if current index is first video will turn to this new first video
+			if(this.state.currentVideoIndex == 0){
+				let vid = myPlayList[0].vid
+				this.setState({
+					videoId: vid
+				})
+			}else{
+				this.setState({
+					currentVideoIndex: this.state.currentVideoIndex - 1
+				})
+			}
+		}*/
 		this.setState({
 			myPlayList: myPlayList
 		})
