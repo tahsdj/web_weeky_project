@@ -1,9 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './video-room.sass'
+import uuid from 'uuid/v4'
 import VideoList from 'components/video-list.jsx'
 import {getSearchVideos,sayHello} from 'api/youtube-request.js'
 import Youtube from 'react-youtube'
+import {listShareVideos,shareVideoToOthers,onShareVideos} from 'api/share-video.js'
 
 export default class VideoRoom extends React.Component {
 	constructor(props){
@@ -15,7 +17,9 @@ export default class VideoRoom extends React.Component {
 			myPlayList: [],
 			player: '',
 			currentVideoIndex: 0,
-			playListVideosLimit: 6
+			playListVideosLimit: 6,
+			mySharedVideoUuid: '',
+			lifeTime: 100
 		}
 		this.handleInput = this.handleInput.bind(this)
 		this.handlekeyPress = this.handlekeyPress.bind(this)
@@ -23,6 +27,9 @@ export default class VideoRoom extends React.Component {
 		this.cancelSearching = this.cancelSearching.bind(this)
 		this.playOtherVideos = this.playOtherVideos.bind(this)
 		this.handlePlayList = this.handlePlayList.bind(this)
+		this.shareVideo = this.shareVideo.bind(this)
+		this.handleComment = this.handleComment.bind(this)
+		this.addSharedVideo = this.addSharedVideo.bind(this)
 	}
 	componentDidMount(){
 		/*
@@ -30,6 +37,7 @@ export default class VideoRoom extends React.Component {
 				console.log(videos)
 			})
 		*/
+		this.onDatabase = onShareVideos(this.addSharedVideo) 
 	}
 	render(){
 		let searchResults = this.state.searchResults
@@ -55,7 +63,7 @@ export default class VideoRoom extends React.Component {
 		}
 		//style for video frame
 		const opts = {
-	      height: '450',
+	      height: '100%',
 	      width: '100%',
 	      playerVars: { // https://developers.google.com/youtube/player_parameters
 	        autoplay: 1
@@ -64,20 +72,30 @@ export default class VideoRoom extends React.Component {
 	    let currentIndex = this.state.currentVideoIndex
 		return (
 			<div className="room-board">
-			 	<div className="search-box" onMouseLeave={this.cancelSearching}>
-			 		<input className="search-input" placeholder="search videos" 
-			 				value={this.state.inputText}
-			 				onChange={this.handleInput}
-			 				onKeyPress={this.handlekeyPress}/>
-			 		{ searchResultsDOM }
-			 	</div>
+				<header>
+				 	<div className="search-box" onMouseLeave={this.cancelSearching}>
+				 		<input className="search-input" placeholder="search videos" 
+				 				value={this.state.inputText}
+				 				onChange={this.handleInput}
+				 				onKeyPress={this.handlekeyPress}/>
+				 		<div className="search-video-container">
+				 			{ searchResultsDOM }
+				 		</div>
+				 	</div>
+				 	<div id="profile">
+				 		<img src="./img/profile.png"/>
+	
+				 	</div>
+			 	</header>
 				<div className="container">
 					<div id="player">
 						<Youtube  videoId={this.state.videoId} opts={opts} onEnd={this.playOtherVideos}/>
 					</div>
 					<VideoList playList={this.state.myPlayList} 
 								currentIndex={this.handlePlayList} 
-								activeVideo={currentIndex}/>
+								activeVideo={currentIndex}
+								shareVideo={this.shareVideo}
+								handleComment={this.handleComment}/>
 				</div>
 			</div>
 		)
@@ -100,6 +118,35 @@ export default class VideoRoom extends React.Component {
 				})
 			})
 		*/
+	}
+
+	addSharedVideo(v){
+		let playList = this.state.myPlayList
+		//console.log('v: ', v.uuid)
+		//console.log('current',this.state.mySharedVideoUuid)
+		if(v.uuid != this.state.mySharedVideoUuid){
+			let d = new Date()
+			let time = Math.floor((d.getTime()/1000))
+			//console.log(time)
+			let timeGap = Math.floor(((time-v.time) / 60))
+			if (timeGap < 1) timeGap = 'just now'
+			else if ( timeGap > 1 && timeGap < 60) timeGap = `${timeGap} minutes ago`
+			else if ( timeGap >= 60) timeGap = `${Math.floor(timeGap/60)} hours ago`
+
+			v.when = timeGap
+			let life = Math.floor(((time-v.time) / 60 / 60))
+			//console.log(Math.floor(timeGap/60))
+			if( life < this.state.lifeTime) {
+				playList = [v,...playList]
+				this.setState({
+					currentVideoIndex: this.state.currentVideoIndex+1
+				})
+			}
+		}
+		//console.log(playList)
+		this.setState({
+			myPlayList: playList
+		})
 	}
 
 	searchVideo(searchText){
@@ -129,12 +176,15 @@ export default class VideoRoom extends React.Component {
 			channel: v.snippet.channelTitle,
 			title: v.snippet.title,
 			imgUrl: v.snippet.thumbnails.default.url,
-			vid: v.id.videoId
+			vid: v.id.videoId,
+			shareActive: false,
+			comments: '',
+			uuid: uuid()
 		}
 		let playList = this.state.myPlayList
 		let index = this.state.currentVideoIndex
-		if( playList.length != 0 ) index++
 		//add this video to playlist
+		//if( playList.length != 0 ) index = index
 		playList.splice(index,0,video)
 		//keep the limit videos
 		/*
@@ -159,7 +209,10 @@ export default class VideoRoom extends React.Component {
 			channel: v.snippet.channelTitle,
 			title: v.snippet.title,
 			imgUrl: v.snippet.thumbnails.default.url,
-			vid: v.id.videoId
+			vid: v.id.videoId,
+			comments: '',
+			shareActive: false,
+			uuid: uuid()
 		}
 		let myPlayList = new Array()
 		myPlayList = this.state.myPlayList
@@ -204,5 +257,28 @@ export default class VideoRoom extends React.Component {
 				videoId: vid,
 				currentVideoIndex: index
 			})
+	}
+	shareVideo(vid,index){
+		let playList = this.state.myPlayList
+		playList[index].shareActive = true
+		this.setState({
+			myPlayList: playList,
+			mySharedVideoUuid: playList[index].uuid
+		})
+	}
+	handleComment(index,comment,userName){
+		let playList = this.state.myPlayList
+		let channel = playList[index].channel
+		let user = userName==''?'路人':userName
+		playList[index].channel = user +' shared '+channel +'\'s video' 
+		playList[index].comments = comment
+		playList[index].shareActive = false
+		let _this = this
+		shareVideoToOthers(playList[index]).then(data=>{
+			playList[index] = data
+			_this.setState({
+				myPlayList: playList
+			})
+		})
 	}
 }

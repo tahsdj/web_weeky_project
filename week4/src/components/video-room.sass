@@ -4,11 +4,13 @@
 	position: relative
 	width: 100%;
 	min-width: 100vh;
+	flex-direction: column
 	justify-content: center
 	padding: 100px 0px 50px 0px
 	*
 		//border: 1px solid gray
 		font-family: sans-serif,Microsoft JhengHei,MingLiU,serif
+
 	.container
 		display: inline-flex
 		width: calc(100% - 10px)
@@ -19,58 +21,136 @@
 		#player
 			width: calc(100% - 400px)
 			max-width: 1000px
+			height: 65vh
+			max-height: 600px
 			margin-right: 10px
 			border: none
 			padding: none
-	.search-box
+						
+				
+		
+	header
 		display: inline-flex
-		flex-direction: column
 		position: fixed
-		width: calc(100% - 20px)
-		max-width: 600px
-		top: 10px
+		width: calc(100% - 10px)
+		padding: 5px
+		max-width: 700px
+		top: 0px
 		left: 50%
 		transform: translateX(-50%)
-		padding: 10px
-		align-items: center
 		z-index: 99
-
-		.search-input
-			width: calc(100% - 20px)
-			padding: 10px
-			border-radius: 20px
-			background-color: rgba(255,255,255,0.2)
-			color: rgb(200,200,200)
-			outline: none
-			border: none
-		
-		.search-video
+		.search-box
 			display: inline-flex
-			position: relative
-			width: calc(100% - 90px)
-			flex-direction: rows
-			background-color: #232340
-			color: white
-			padding: 5px
-			transition: background-color 0.2s
-			cursor: pointer
-			padding-right: 50px
-			.add
-				position: absolute
-				right: 20px
-				top: 50%
-				transform: translate(-50%,-50%)
-				width: 20px
-				height: 20px
-			.video-detail
+			flex-direction: column
+			position: abs
+			width: calc(100% - 55px)
+			//max-width: 600px
+			//top: 10px
+			//left: 50%
+			//transform: translateX(-50%)
+			padding: 10px
+			align-items: flex-start
+
+			.search-input
+				width: calc(100% - 20px)
+				padding: 10px
+				border-radius: 20px
+				background-color: rgba(255,255,255,0.2)
+				color: rgb(200,200,200)
+				outline: none
+				border: none
+				&::-webkit-input-placeholder
+					color: rgb(200,200,200)
+			.search-video-container
+				display: block
+				//flex-direction: column
+				width: calc(100% - 30px)
+				padding-left: 15px
+				max-height: calc(100% - 85px)
+				overflow-y: auto
+				&::-webkit-scrollbar-track
+					border-radius: 3px
+				&::-webkit-scrollbar
+					transform: translateX(-15px)
+					width: 5px
+					background-color: rgba(200,200,200,0.1)
+				&::-webkit-scrollbar-thumb
+					border-radius: 3px
+					background-color: rgba(200,200,200,0.3)
+				.search-video
+					display: inline-flex
+					position: relative
+					width: calc(100% - 10px)
+					flex-direction: row
+					background-color: #22253E
+					color: white
+					padding: 5px
+					transition: background-color 0.2s
+					cursor: pointer
+					>img
+						max-height: 100px
+					.add
+						position: absolute
+						right: 20px
+						top: 50%
+						transform: translate(-50%,-50%)
+						width: 20px
+						height: 20px
+					.video-detail
+						display: inline-flex
+						flex-direction: column
+						padding: 10px 30px 10px 10px
+						
+						.video-title
+							padding: 10px
+							font-size: 14px
+					&:hover
+						background-color: #3c3c59
+		#profile
+			display: inline-flex
+			flex-direction: column
+			width: 50px
+			padding: 10px 0px 0px 0px
+			align-items: center
+			img
+				width: 35px
+				height: 35px
+			.profile-msg
 				display: inline-flex
 				flex-direction: column
-				padding: 10px
-				
-				.video-title
-					padding: 10px
-			&:hover
-				background-color: #3c3c59
+				margin-top: 10px
+				width: 120px
+				background-color: white
+				padding: 5px
+				border-radius: 5px
+				align-items: center
+				input
+					margin: 0
 
-::-webkit-input-placeholder
-	color: rgb(200,200,200)
+					width: calc(100%)
+
+@media screen and (max-width: 650px)
+	.room-board
+		justify-content: flex-start
+		padding-top: 60px
+		padding-bottom: 10px
+		.container
+			display: inline-flex
+			flex-direction: column
+			width: calc(100vw - 10px)
+			#player
+				width: calc(100% + 10px)
+				transform: translateX(-5px)
+				height: 35vh
+		header
+			.search-box
+				.search-video-container
+					padding: 0
+					margin-top: 7px
+					width: calc(100vw - 10px)
+					transform: translateX(-10px)
+					.search-video
+						.add
+							right: 2px
+
+		

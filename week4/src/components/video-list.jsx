@@ -5,7 +5,16 @@ import './video-list.sass'
 export default class VideoList extends React.Component {
 	constructor(props){
 		super(props)
+		this.state = {
+			videos: [],
+			myCommemt: '',
+			userName: ''
+		}
 		this.playVideo = this.playVideo.bind(this)
+		this.shareVideo = this.shareVideo.bind(this)
+		this.handleComment = this.handleComment.bind(this)
+		this.handleInputComment = this.handleInputComment.bind(this)
+		this.handleUserName = this.handleUserName.bind(this)
 	}
 	componentDidMount(){
 		/*
@@ -26,16 +35,29 @@ export default class VideoList extends React.Component {
 			let index = -1
 			playListVideoDom = videos.map(v => {
 				index++
+				let commentForm = v.shareActive?(
+												<div className="comment-form">
+													<input placeholder="your name" value={this.state.userName} onChange={this.handleUserName}/>
+													<textarea placeholder="share your mood~" 
+														onKeyPress={this.handleComment.bind(this,index)} 
+														value={this.state.myCommemt}
+														onChange={this.handleInputComment}>
+													</textarea>
+												</div>
+												):null
+				let comments = v.comments!=''?v.comments:v.title
 				return (
-					<div className={ (activeVideo == index)?"video-block playing":"video-block"} key={v.vid+'playlist'} onClick={this.playVideo.bind(this,v.vid,index)}>
-						<img className="video-img" src={v.imgUrl}/>
+					<div className={ (activeVideo == index)?"video-block playing":"video-block"} key={v.uuid+'playlist'}>
+						<img className="video-img" src={v.imgUrl} onClick={this.playVideo.bind(this,v.vid,index)}/>
 						<div className="video-detail">
 							<div className="channel-name">
-								{v.channel}
+								{v.channel} <div className="when">{v.when}</div>
 							</div>
 							<div className="video-title">
-								{v.title}
+								{comments}
 							</div>
+							<img src="img/share.png" className="share-icon" onClick={this.shareVideo.bind(this,v,index)}/>
+							{ commentForm }
 						</div>
 					</div>
 				)
@@ -50,5 +72,28 @@ export default class VideoList extends React.Component {
 	}
 	playVideo(vid,index){
 		this.props.currentIndex(vid,index)
+	}
+	shareVideo(v,index){
+		if(v.comments == '')
+			this.props.shareVideo(v.vid,index)
+	}
+	handleComment(index,e,skip){
+		//console.log(index)
+		//console.log(e.key)
+		//console.log(skip)
+		if (e.key === 'Enter' && this.state.myCommemt != '')
+			this.props.handleComment(index,this.state.myCommemt,this.state.userName)
+	}
+	handleInputComment(e){
+		let content = e.target.value
+		this.setState({
+			myCommemt: content
+		})
+	}
+	handleUserName(e){
+		let name = e.target.value
+		this.setState({
+			userName: name
+		})
 	}
 }
