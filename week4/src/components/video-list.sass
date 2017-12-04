@@ -59,6 +59,7 @@
 			display: inline-flex
 			flex-direction: column
 			padding: 5px
+			width: calc(100% - 70px)
 			.channel-name
 				.when
 					font-size: 8px
@@ -74,11 +75,13 @@
 					font-size: 12px
 				input
 					padding: 2px
+					outline: none
 				textarea
 					display: inline-flex
 					width: calc(100% - 20px)
 					min-height: 30px
 					margin-top: 5px
+					outline: none
 					&::-webkit-textarea-placeholder
 						color: rgb(200,200,200)
 		.video-img
@@ -92,6 +95,31 @@
 			right: 10px
 			top: 5px
 			cursor: pointer
+		.msg-container
+			display: inline-flex
+			flex-direction: column
+			width: calc(100% - 10px)
+			padding: 5px
+			div
+				display: inline-flex
+				align-items: center
+				padding: 0px 0px 5px 5px
+				.msg-icon
+					display: inline-flex
+					width: 15px
+					height: 15px
+					margin-right: 5px
+			input
+				width: calc(100% - 10px)
+				padding: 5px
+				background-color: rgba(255,255,255,0.2)
+				border-radius: 10px
+				border: none
+				color: rgba(255,255,255,0)
+				outline: none
+				&:focus
+					color: rgba(20,20,20,1)
+
 		&:hover
 			background-color: rgba(255,255,255,0.4)
 	.playing
@@ -102,7 +130,7 @@
 		width: calc(100%)
 		margin-top: 10px
 		height: auto
-		max-height: 65vh
+		max-height: calc(65vh - 90px)
 		.video-block
 			width: calc(100% - 10px)
 

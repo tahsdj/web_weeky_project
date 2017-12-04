@@ -15,6 +15,8 @@ export default class VideoList extends React.Component {
 		this.handleComment = this.handleComment.bind(this)
 		this.handleInputComment = this.handleInputComment.bind(this)
 		this.handleUserName = this.handleUserName.bind(this)
+		this.loadMsg = this.loadMsg.bind(this)
+		this.shootMsg = this.shootMsg.bind(this)
 	}
 	componentDidMount(){
 		/*
@@ -40,12 +42,24 @@ export default class VideoList extends React.Component {
 													<input placeholder="your name" value={this.state.userName} onChange={this.handleUserName}/>
 													<textarea placeholder="share your mood~" 
 														onKeyPress={this.handleComment.bind(this,index)} 
-														value={this.state.myCommemt}
 														onChange={this.handleInputComment}>
 													</textarea>
 												</div>
 												):null
 				let comments = v.comments!=''?v.comments:v.title
+				let numOfdanmu = typeof(v.danmuMsg) === 'number'?0: v.danmuMsg.length
+				let shareIcon = (<img src="img/share.png" className="share-icon" 
+										onClick={this.shareVideo.bind(this,v,index)} 
+										alt="click to share"/>)
+				let msgIcon = (<div className="msg-container">
+								<div>
+									<img src="img/msg.png" className="msg-icon" onClick={this.loadMsg}/><span>{numOfdanmu}</span>
+								</div>
+								<input placeholder="shoot your message" onKeyPress={this.shootMsg.bind(this,index)}
+											onChange={this.handleInputComment}/>
+								</div>)
+				let logo = v.comments==''?shareIcon:msgIcon
+				//let msgLogo = v.comments!=''?(<img src="img/msg.png" className="msg-icon"/>):null
 				return (
 					<div className={ (activeVideo == index)?"video-block playing":"video-block"} key={v.uuid+'playlist'}>
 						<img className="video-img" src={v.imgUrl} onClick={this.playVideo.bind(this,v.vid,index)}/>
@@ -56,7 +70,9 @@ export default class VideoList extends React.Component {
 							<div className="video-title">
 								{comments}
 							</div>
-							<img src="img/share.png" className="share-icon" onClick={this.shareVideo.bind(this,v,index)}/>
+							{ 
+								logo
+							}
 							{ commentForm }
 						</div>
 					</div>
@@ -81,8 +97,14 @@ export default class VideoList extends React.Component {
 		//console.log(index)
 		//console.log(e.key)
 		//console.log(skip)
-		if (e.key === 'Enter' && this.state.myCommemt != '')
-			this.props.handleComment(index,this.state.myCommemt,this.state.userName)
+		let content = e.target.value
+		if (e.key === 'Enter' && content!= ''){
+			this.props.handleComment(index,content,this.state.userName)
+			e.target.value = ''
+			this.setState({
+				myCommemt: ''
+			})
+		}
 	}
 	handleInputComment(e){
 		let content = e.target.value
@@ -95,5 +117,18 @@ export default class VideoList extends React.Component {
 		this.setState({
 			userName: name
 		})
+	}
+	loadMsg(){
+
+	}
+	shootMsg(index,e,skip){
+		let content = e.target.value
+		if(e.key === 'Enter' && content != ''){
+			this.props.shootMsg(index,content)
+			e.target.value = ''
+			this.setState({
+				myCommemt: ''
+			})
+		}
 	}
 }
