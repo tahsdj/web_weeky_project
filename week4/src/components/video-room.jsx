@@ -36,6 +36,7 @@ export default class VideoRoom extends React.Component {
 		}
 		this.time = 0
 		this.timerfunc = null
+		this.searchOver = false
 		this.colorList = ['yellow','green','orange','white']
 		this.handleInput = this.handleInput.bind(this)
 		this.handlekeyPress = this.handlekeyPress.bind(this)
@@ -128,7 +129,8 @@ export default class VideoRoom extends React.Component {
 			<div className="room-board">
 				<div id="display-board" style={displayBoardStyle}>
 					<header>
-					 	<div className="search-box" onMouseLeave={this.cancelSearching}>
+					 	<div className="search-box" onMouseLeave={this.cancelSearching}
+					 								onMouseOver={()=>{ _this.searchOver = true}}>
 					 		<input className="search-input" placeholder="search videos" 
 					 				value={this.state.inputText}
 					 				onChange={this.handleInput}
@@ -228,7 +230,7 @@ export default class VideoRoom extends React.Component {
 		if(searchText){
 			let _this = this
 			getSearchVideos(searchText).then(videos=>{
-				console.log(videos)
+				//console.log(videos)
 				_this.setState({
 					searchResults: videos
 				})
@@ -283,9 +285,15 @@ export default class VideoRoom extends React.Component {
 		})
 	}
 	cancelSearching(){
-		this.setState({
-			searchResults: []
-		})
+		let _this = this
+		this.searchOver = false
+		setTimeout(function(){
+			if(!_this.searchOver){
+				_this.setState({
+					searchResults: []
+				})
+			}
+		},1000)
 	}
 	addToPlayList(v){
 		let video = {

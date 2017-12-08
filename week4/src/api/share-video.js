@@ -22,7 +22,10 @@ export function listShareVideos(){
 		videoRef.once('value').then(data=>{
 			let videos = new Array()
 			data.forEach(d=>{
-				videos.push(d.val())
+				let obj = d.val()
+				obj.key = d.key
+				//console.log(obj.key)
+				videos.push(obj)
 			})
 			resolve(videos)
 		})
@@ -31,6 +34,7 @@ export function listShareVideos(){
 export function onShareVideos(method){
 	return videoRef.on('child_added',data=>{
 		let content = data.val()
+		content.key = data.key
 		method(content)
 	})
 }
@@ -40,6 +44,26 @@ export function shareVideoToOthers(v){
 		v['time'] = moment().unix()
 		videoRef.push(v).then(()=>{
 			resolve(v)
+		})
+	})
+}
+
+
+export function shootMsgOnPost(key,allMsg){
+	return new Promise((resolve,reject)=>{
+		/*videoRef.child(uuid).child('danmuMsg').once('value',snapshot=>{
+			let key = snapshot.key
+			console.log('s:'+snapshot.val())
+			console.log(key)
+			videoRef.child(key).update({
+				danmuMsg: allMsg
+			})
+		})*/
+		videoRef.child(key).update({
+			/*videoRef.child(key).update({
+				danmuMsg: allMsg
+			})*/
+			danmuMsg: allMsg
 		})
 	})
 }
