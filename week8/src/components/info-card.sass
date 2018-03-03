@@ -1,0 +1,103 @@
+
+.info-card-container
+	display: inline-flex
+	flex-direction: column
+	width: calc(100% - 0px)
+	padding: 0px 0px 40px 0px
+	align-items: center
+	margin-bottom: 10px
+	//border: 1px solid rgba(230,230,230, 1)
+	box-shadow: 3px 3px 5px rgba(220,220,220, 1)
+	background-color: white
+
+	.row
+		display: inline-flex
+		flex-direction: row
+	.col
+		display: inline-flex
+		flex-direction: column
+		
+	.header-container
+		width: calc(100% - 20px)
+		padding: 5px 10px
+		align-items: center
+
+		.profile-container
+			display: inline-flex
+			justify-content: center
+			align-items: center
+			height: 30px
+			width: 30px
+			border-radius: 50%
+			border: 1px solid rgba(240,240,240,1)
+			img
+				
+				width: 100px
+				height: 100px
+				//border-radius: 50%
+				//border: 0.5px solid rgba(250,250,250,1)
+		
+		.position-description
+			display: inline-flex
+			flex-direction: column
+			align-items: flex-start
+			padding: 0px 10px
+			font-size: 0.8em
+
+			.place
+				font-size: 0.7em
+
+	.image-container
+		width: calc(100% - 0px)
+		padding: 5px 0px
+		min-height: 70px
+		align-items: center
+		img.user
+			width: 100px
+			//height: 100px
+			//border-radius: 50%
+		img.spot
+			width: 100%
+			height: 100%
+
+	.timer-container
+		width: calc(100%)
+		align-items: center
+		padding: 20px 0px
+
+		.timer
+			width: 200px
+			height: 50px
+			justify-content: center
+			align-items: center
+			font-size: 30px
+			&:active
+				color: gray
+			.time
+				width: 40px
+				font-size: 30px
+				text-align: center
+	.button-container
+		width: calc(100% - 20px)
+		padding: 10px
+		align-items: center
+		justify-content: center
+
+		button.button
+			width: 100%
+			height: 50px
+			border-radius: 10px
+			outline: none
+			border: 1px solid rgba(230,230,230, 1)
+			background-color: white
+			cursor: pointer
+			transition: background-color 0.3s
+			&:hover
+				background-color: rgba(250,250,250, 1)
+
+		.travel-status
+			display: inline-flex
+			width: 100%
+			height: 50px
+			align-items: center
+			justify-content: center

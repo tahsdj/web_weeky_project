@@ -1,0 +1,129 @@
+header
+	display: inline-flex
+	position: fixed
+	flex-direction: row
+	justify-content: center
+	width: 100%
+	transition: transform 0.5s
+	z-index: 1
+	.content-container
+		display: inline-flex
+		width: calc(100% - 40px)
+		justify-content: flex-end
+		padding: 20px 20px
+		max-width: 800px
+		.icon
+			display: inline-flex
+			position: relative
+			width: 20px
+			height: 20px
+			cursor: pointer
+			padding: 10px
+
+		.photos-icon-container
+			position: relative
+
+			img
+				width: 100%
+				height: 100%
+
+			.new-photo
+				position: absolute
+				display: inline-flex
+				justify-content: center
+				align-items: center
+				top: 4px
+				left: 4px
+				background-color: red
+				border-radius: 50%
+				width: 15px
+				height: 15px
+				color: white
+				font-size: 0.6em
+
+			.hidden
+				display: none
+			.display
+				display: inline-flex
+
+		.notification-icon-container
+			position: relative
+			img.notification-icon
+				width: 100%
+				height: 100%
+
+			.new-notifications
+				position: absolute
+				display: inline-flex
+				justify-content: center
+				align-items: center
+				top: 4px
+				left: 4px
+				background-color: red
+				border-radius: 50%
+				width: 15px
+				height: 15px
+				color: white
+				font-size: 0.6em
+
+			.hidden
+				display: none
+			.display
+				display: inline-flex
+		.filter
+			display: inline-flex
+			position: fixed
+			top: 0
+			left: 0
+			width: calc(100% + 0px)
+			height: 100vh
+			background-color: rgba(30,30,30, 0.5)
+		.hidden
+			display: none
+			.notification-container
+				position: absolute
+				display: block
+				top: 25px
+				right: -10px
+				width: 250px
+				max-height: 350px
+				background-color: white
+				padding: 5px
+				border: 1px solid rgba(245,245,245, 1)
+				//justify-content: center
+				z-index: 10
+				overflow-y: auto
+
+				.notification
+					display: inline-flex
+					flex-direction: row
+					width: calc(100% - 20px)
+					padding: 5px 10px
+					height: 40px
+					align-items: center
+					border-bottom: 1px solid rgba(245,245,245, 1) 
+					transition: background-color 0.3s
+					background-color: white
+
+					&:hover
+						background-color: rgba(250,250,250, 1)
+					img
+						width: auto
+						height: 30px
+					.info-container
+						display: inline-flex
+						flex-direction: column
+						align-items: flex-start
+						span.time
+							font-size: 0.6em
+						span
+							padding: 0px 10px
+							font-size: 0.8em
+		.user-icon-container
+			
+			img
+				width: 100%
+				height: 100%
+
+.left
+	transform: translate(-300px,0px)

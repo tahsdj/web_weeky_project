@@ -1,0 +1,26 @@
+{
+    "name": "mapleTravel",
+    "short_name": "maple",
+    "start_url": "/",
+    "icons": [{
+        "src": "./icons/logo.png",
+        "sizes": "144x144",
+        "type": "image/png"
+    }, {
+        "src": "./icons/logo.png",
+        "sizes": "192x92",
+        "type": "image/png"
+    }, {
+        "src": "http://gametsg.techbang.com/maplestory/icon_npc/6ad10345883f0b558f3f742ba990a177.png",
+        "sizes": "384x384",
+        "type": "image/png"
+    }, {
+        "src": "http://gametsg.techbang.com/maplestory/icon_npc/6ad10345883f0b558f3f742ba990a177.png",
+        "sizes": "512x512",
+        "type": "image/png"
+    }],
+    "background_color": "white",
+    "theme_color": "white",
+    "display": "standalone",
+    "orientation": "portrait"
+}

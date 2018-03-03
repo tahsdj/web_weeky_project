@@ -1,0 +1,101 @@
+.story-detail-container
+	display: inline-flex
+	flex-direction: column
+	position: absolute
+	left: 50%
+	transform: translate(-50%,0px)
+	top: 50px
+	width: calc(100% - 40px)
+	padding: 10px 20px
+	padding-bottom: 30px
+	background-color: white
+	max-width: 550px
+	border-radius: 5px 
+	margin-bottom: 30px
+	min-height: 85vh
+	z-index: 2
+
+	.row
+		display: inline-flex
+		flex-direction: row
+	.col
+		display: inline-flex
+		flex-direction: column
+	.content
+		display: inline-flex
+		width: calc(100%)
+
+		.npc-container
+			width: calc(100%)
+			padding: 5px 0px 20px 0px
+			img.npc-img
+				height: 50px
+				width: auto
+
+			img.user-img
+				height: 100px
+				width: 100px
+
+			.npc-info
+				padding: 0px 7px
+
+				.npc-name
+					font-size: 1em
+					font-weight: 530
+				.npc-position
+					font-size: 0.7em
+		
+		.description
+			width: calc(100%)
+			justify-content: flex-start
+			padding-top: 5px
+			padding-bottom: 10px
+
+		.npc-description
+			width: calc(100%)
+			justify-content: flex-start
+			padding-bottom: 10px
+
+			.npc-img-layout
+				display: inline-flex
+				min-width: 30px
+				max-width: 30px
+				height: 30px
+				justify-content: center
+				align-items: center
+				background-color: #eaeaea
+				border: 1px solid rgba(245,245,245,1)
+
+				img
+					height: 100%
+					width: auto
+				img.user-img
+					height: 120px
+					width: 120px
+			.text
+				padding: 0px 10px
+				font-size: 0.85em
+
+	.close-icon-container
+		position: absolute
+		display: inline-flex
+		right: 5px
+		top: 5px
+		width: 10px
+		height: 10px
+		cursor: pointer
+
+		img
+			width: 100%
+			height: 100%
+
+	.reward-dom
+		align-items: center
+		padding: 0px 0px
+
+		.img-container
+			display: inline-flex
+			justify-content: center
+			align-items: center
+		span
+			padding: 5px 5px 5px 0px

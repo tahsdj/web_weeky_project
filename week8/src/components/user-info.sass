@@ -1,0 +1,142 @@
+.profile-info-container
+	display: inline-flex
+	position: absolute
+	left: calc( 100% )
+	top: calc(0%)
+	//border: 1px solid rgba(245,245,245, 1)
+	flex-direction: column
+	width: 330px
+	max-width: 330px
+	height: 100vh
+	background-color: white
+	box-shadow: 3px 3px 5px rgba(235,235,235, 1)
+	//border-left: 1px solid rgba(220,220,220, 1)
+
+	.profile-image-container
+		display: inline-flex
+		flex-direction: column
+		height: 150px
+		width: calc(100% - 30px)
+		padding: 0px 15px
+		align-items: center
+		background-color: rgba(230,230,230, 1)
+		img
+			height: 100%
+			width: auto
+	.info-container
+		display: inline-flex
+		flex-direction: column
+		font-size: 0.7em
+		padding: 10px
+		.info-icon
+			width: 15px
+			height: 15px
+
+		.info-row
+			display: inline-flex
+			width: 120px
+			flex-direction: row
+			padding: 5px 0px 0px 0px
+			align-items: center
+
+			.blood-container
+				display: inline-flex
+				position: relative
+				width: 100px
+				height: 15px
+				background-color: #e2e1e1
+				margin-left: 3px
+				align-items: center
+				justify-content: center
+
+				.blood
+					position: absolute
+					display: inline-flex
+					left: 0px
+					top: 0px
+					height: 100%
+					background-color: #86ecb3
+					transition: all 0.5s
+					
+			.exp-container
+				display: inline-flex
+				position: relative
+				width: 100px
+				height: 15px
+				background-color: #e2e1e1
+				margin-left: 3px
+				align-items: center
+				justify-content: center
+
+				.exp
+					position: absolute
+					display: inline-flex
+					left: 0px
+					top: 0px
+					height: 100%
+					background-color: #ecd086
+					transition: all 0.5s
+
+			span
+				padding: 0px 5px
+				z-index: 1
+
+	.item-box-container
+		display: inline-flex
+		flex-direction: column
+		padding: 10px 10px
+		width: calc(100% - 60px)
+
+		.item-box
+			display: inline-flex
+			flex-direction: row
+			width: 220px
+			justify-content: space-between
+			flex-wrap: wrap
+
+			.box
+				display: inline-flex
+				justify-content: center
+				align-items: center
+				width: 50px
+				height: 50px
+				border: 1px solid rgba(235,235,235, 1)
+				margin-bottom: 5px
+				border-radius: 5px
+			.item
+				&:hover
+					width: 80px
+					justify-content: space-around
+					padding: 10px
+					
+					.item-info-container
+						display: inline-flex
+						flex-direction: column
+						padding: 5px
+						font-size: 0.7em
+					
+				.item-info-container
+					display: none
+					span
+						
+					button
+						border: none
+						border-radius: 5px
+						background-color: #acd3e4
+						cursor: pointer
+						outline: hidden
+						min-width: 40px
+				img
+				
+
+		
+				
+
+			.rare
+				border: 1px solid rgba(#e8e147, 1)
+				background-color: #fffeef
+
+			.seldom
+				border: 1px solid rgba(#c4ace0, 1)
+				background-color: #c4ace021
+
